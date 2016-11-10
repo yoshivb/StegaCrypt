@@ -3,6 +3,12 @@
 *.lo
 *.o
 *.obj
+*.iobj
+*.ipdb
+*.pdb
+*.ilk
+*.idb
+*.enc
 
 # Precompiled Headers
 *.gch
@@ -27,3 +33,11 @@
 *.exe
 *.out
 *.app
+
+# Misc
+*.suo
+placeholder.txt
+*.tlog
+*.log
+*.sdf
+*.opensdf
