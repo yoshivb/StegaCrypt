@@ -18,12 +18,18 @@
     <ClCompile Include="src\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\ROT.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="inc\Type.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="inc\AllTypes.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\ROT.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

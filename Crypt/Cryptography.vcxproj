@@ -166,9 +166,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\ROT.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="inc\AllTypes.h" />
+    <ClInclude Include="inc\ROT.h" />
     <ClInclude Include="inc\Type.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -41,3 +41,4 @@ placeholder.txt
 *.log
 *.sdf
 *.opensdf
+data/

@@ -161,12 +161,12 @@ string GetExtension( string& filePath )
 
 #define EncryptMethodCount 1
 EncryptFunctionsPair EncryptFunctions[EncryptMethodCount] {
-	EncryptFunctionsPair("LSB", NULL, NULL)
+	EncryptFunctionsPair("ROT", &ROTEncryptFactory, &ROTValidateFunction)
 };
 
 #define DecryptMethodCount 1
 DecryptFunctionsPair DecryptFunctions[DecryptMethodCount]{
-	DecryptFunctionsPair("LSB", NULL, NULL)
+	DecryptFunctionsPair("ROT", &ROTDecryptFactory, &ROTValidateFunction)
 };
 
 void EncryptMode()
@@ -192,23 +192,7 @@ void EncryptMode()
 	int encryptIndex = GetValidIndex( EncryptMethodCount - 1 );
 	EncryptType* encryptType = EncryptFunctions[encryptIndex].function();
 	uint maxFileSize = encryptType->Initialize( inputFilePath, folderPath + outputFileName );
-	printf("Max encrypt file size: %s\n", StringfyBytecount(maxFileSize).c_str());
-	uint fileSize = maxFileSize;
-	FILE* encryptFile = NULL;
-	while (fileSize >= maxFileSize)
-	{
-		encryptFilePath = GetValidPath("File to encrypt:\n");
-		encryptFile = fopen(encryptFilePath.c_str(), "rb");
-		fseek(encryptFile, 0, SEEK_END);
-		fileSize = ftell(encryptFile);
-		rewind(encryptFile);
-		if (fileSize >= maxFileSize)
-		{
-			printf("File is too big.\n");
-			fclose(encryptFile);
-		}
-	}
-	encryptType->Encrypt(encryptFile, fileSize);
+	encryptType->Encrypt();
 }
 
 void DecryptMode()
@@ -242,7 +226,7 @@ int main()
 	bool modeSelected = false;
 
 	SetConsoleTextAttribute( GetStdHandle( STD_OUTPUT_HANDLE ), 0xA );
-	printf( "========[Steganography]========\n" );
+	printf( "========[Cryptography]========\n" );
 	printf( "=  Author: Yoshivb            =\n" );
 	printf( "=  Version: 0.1               =\n" );
 	printf( "===============================\n" );

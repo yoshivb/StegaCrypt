@@ -9,7 +9,7 @@ class EncryptType
 {
 public:
 	virtual uint Initialize( std::string a_inputFilePath, std::string a_outputFilePath ) = 0;
-	virtual void Encrypt(FILE* a_encryptFile, uint a_fileSize) = 0;
+	virtual void Encrypt() = 0;
 };
 
 class DecryptType
