@@ -23,7 +23,7 @@ void DCTEncrypt::EncryptDCTS(j_decompress_ptr a_srcinfo, j_compress_ptr a_dstinf
 	unsigned int result = fread(buffer, 1, a_fileSize, a_encryptFile);
 
 	//Allocate DCT array buffers
-	for (JDIMENSION compnum = 0; compnum < a_srcinfo->num_components; compnum++)
+	for (JDIMENSION compnum = 0; compnum < (uint)a_srcinfo->num_components; compnum++)
 	{
 		coef_buffers[compnum] = (a_dstinfo->mem->alloc_barray)((j_common_ptr)a_dstinfo, JPOOL_IMAGE, a_srcinfo->comp_info[compnum].width_in_blocks,
 			a_srcinfo->comp_info[compnum].height_in_blocks);
@@ -34,7 +34,7 @@ void DCTEncrypt::EncryptDCTS(j_decompress_ptr a_srcinfo, j_compress_ptr a_dstinf
 	uint l = 0;
 
 	//For each component,
-	for (JDIMENSION compnum = 0; compnum < a_srcinfo->num_components; compnum++)
+	for (JDIMENSION compnum = 0; compnum < (uint)a_srcinfo->num_components; compnum++)
 	{
 		block_row_size = (size_t) sizeof(JCOEF) * DCTSIZE2 * a_srcinfo->comp_info[compnum].width_in_blocks;
 		//...iterate over rows,
@@ -77,7 +77,7 @@ void DCTEncrypt::EncryptDCTS(j_decompress_ptr a_srcinfo, j_compress_ptr a_dstinf
 
 	//Save the changes
 	//For each component,
-	for (JDIMENSION compnum = 0; compnum < a_srcinfo->num_components; compnum++)
+	for (JDIMENSION compnum = 0; compnum < (uint)a_srcinfo->num_components; compnum++)
 	{
 		block_row_size = (size_t) sizeof(JCOEF)*DCTSIZE2 * a_srcinfo->comp_info[compnum].width_in_blocks;
 		//...iterate over rows
@@ -123,7 +123,7 @@ uint DCTEncrypt::Initialize( string a_inputFilePath, string a_outputFilePath )
 	jpeg_copy_critical_parameters(&srcinfo, &dstinfo);
 
 	uint fileSize = 0;
-	for (JDIMENSION compnum = 0; compnum < srcinfo.num_components; compnum++)
+	for (JDIMENSION compnum = 0; compnum < (uint)srcinfo.num_components; compnum++)
 	{
 		fileSize += (srcinfo.comp_info[compnum].height_in_blocks * srcinfo.comp_info[compnum].width_in_blocks * DCTSIZE2)/8;
 	}
@@ -179,14 +179,14 @@ void DCTDecrypt::LoadEncryptedDCTS( j_decompress_ptr a_srcinfo, JDIMENSION a_x_c
 	JBLOCKARRAY row_ptrs[MAX_COMPONENTS];
 
 	//Allocate DCT array buffers
-	for (JDIMENSION compnum = 0; compnum < a_srcinfo->num_components; compnum++)
+	for (JDIMENSION compnum = 0; compnum < (uint)a_srcinfo->num_components; compnum++)
 	{
 		inputCoefBuffers[compnum] = (a_srcinfo->mem->alloc_barray)((j_common_ptr)a_srcinfo, JPOOL_IMAGE, a_srcinfo->comp_info[compnum].width_in_blocks,
 			a_srcinfo->comp_info[compnum].height_in_blocks);
 	}
 
 	//For each component,
-	for (JDIMENSION compnum = 0; compnum < a_srcinfo->num_components; compnum++)
+	for (JDIMENSION compnum = 0; compnum < (uint)a_srcinfo->num_components; compnum++)
 	{
 		block_row_size = (size_t) sizeof(JCOEF) * DCTSIZE2 * a_srcinfo->comp_info[compnum].width_in_blocks;
 		//...iterate over rows,
@@ -244,7 +244,7 @@ void DCTDecrypt::DecryptDCTS(j_decompress_ptr a_srcinfo, JDIMENSION a_x_crop_off
 	uchar j = 8;
 
 	//For each component,
-	for (JDIMENSION compnum = 0; compnum < a_srcinfo->num_components; compnum++)
+	for (JDIMENSION compnum = 0; compnum < (uint)a_srcinfo->num_components; compnum++)
 	{
 		block_row_size = (size_t) sizeof(JCOEF) * DCTSIZE2 * a_srcinfo->comp_info[compnum].width_in_blocks;
 		//...iterate over rows,
@@ -281,7 +281,7 @@ void DCTDecrypt::Decrypt()
 {
 	string originalFilePath;
 	{
-		bool validPath = false;
+		int validPath = 0;
 		string inputPath;
 		wstring w_inputPath;
 		while (!validPath)
@@ -294,7 +294,7 @@ void DCTDecrypt::Decrypt()
 			}
 			w_inputPath = wstring(inputPath.begin(), inputPath.end());
 			validPath = PathFileExists(w_inputPath.c_str());
-			if (!validPath)
+			if ( validPath == 0 )
 			{
 				printf("Invalid path.\n");
 			}

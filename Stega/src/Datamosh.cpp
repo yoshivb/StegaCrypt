@@ -31,7 +31,7 @@ uint DatamoshEncrypt::Initialize(std::string a_inputFilePath, std::string a_outp
 
 	bool dataFound = false;
 	EditableChunk currentChunk;
-	for (int i = 0; i < inputFileSize; i++)
+	for (int i = 0; i < (int)inputFileSize; i++)
 	{
 		if (fileBuffer[i] == 0xFF && fileBuffer[i + 1] == 0xD9)
 		{
@@ -154,7 +154,7 @@ void DatamoshDecrypt::Decrypt()
 {
 	string originalFilePath;
 	{
-		bool validPath = false;
+		int validPath = 0;
 		string inputPath;
 		wstring w_inputPath;
 		while (!validPath)
@@ -167,7 +167,7 @@ void DatamoshDecrypt::Decrypt()
 			}
 			w_inputPath = wstring(inputPath.begin(), inputPath.end());
 			validPath = PathFileExists(w_inputPath.c_str());
-			if (!validPath)
+			if (validPath == 0)
 			{
 				printf("Invalid path.\n");
 			}

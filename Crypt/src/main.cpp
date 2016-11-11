@@ -54,7 +54,7 @@ string StripQuotes( string& input )
 */
 string GetValidPath( string question )
 {
-	bool validPath = false;
+	int validPath = 0;
 	string inputPath;
 	wstring w_inputPath;
 	while ( !validPath )
@@ -64,7 +64,7 @@ string GetValidPath( string question )
 		inputPath = StripQuotes( inputPath );
 		w_inputPath = wstring( inputPath.begin(), inputPath.end() );
 		validPath = PathFileExists( w_inputPath.c_str() );
-		if ( !validPath )
+		if ( validPath == 0 )
 		{
 			printf( "Invalid path.\n" );
 		}

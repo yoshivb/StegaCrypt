@@ -107,7 +107,7 @@ void LSB_AudioDecrypt::Decrypt()
 {
 	string originalFilePath;
 	{
-		bool validPath = false;
+		int validPath = 0;
 		string inputPath;
 		wstring w_inputPath;
 		while (!validPath)
@@ -120,7 +120,7 @@ void LSB_AudioDecrypt::Decrypt()
 			}
 			w_inputPath = wstring(inputPath.begin(), inputPath.end());
 			validPath = PathFileExists(w_inputPath.c_str());
-			if (!validPath)
+			if (validPath == 0)
 			{
 				printf("Invalid path.\n");
 			}
