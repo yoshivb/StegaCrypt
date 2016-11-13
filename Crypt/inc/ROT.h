@@ -1,12 +1,8 @@
 #pragma once
-#include "Type.h"
+#include "Cipher.h"
 
-class ROTEncrypt: EncryptType
+class ROTEncrypt: CipherEncrypt
 {
-private:
-	std::string outputFilePath;
-	uchar* fileBuffer;
-	uint inputFileSize;
 public:
 	char modeIndex = -1;
 	uint ROTNumber;
@@ -21,7 +17,7 @@ public:
 	void ByteEncrypt();
 };
 
-class ROTDecrypt : DecryptType
+class ROTDecrypt : CipherDecrypt
 {
 private:
 	ROTEncrypt encryption;

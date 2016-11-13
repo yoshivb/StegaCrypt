@@ -5,6 +5,16 @@ typedef unsigned char uchar;
 typedef unsigned short ushort;
 typedef unsigned int uint;
 
+#define CryptFactory(name) EncryptType* name##EncryptFactory() \
+{ \
+	return (EncryptType*)(new  name##Encrypt()); \
+} \
+ \
+DecryptType* name##DecryptFactory() \
+{ \
+	return (DecryptType*)(new  name##Decrypt()); \
+}
+
 class EncryptType
 {
 public:

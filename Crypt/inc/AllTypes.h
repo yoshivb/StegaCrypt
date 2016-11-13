@@ -1,19 +1,20 @@
 #pragma once
 #include "Type.h"
 #include "ROT.h"
+#include "Bifid.h"
 
 // ROT
-EncryptType* ROTEncryptFactory()
-{
-	return (EncryptType*)(new ROTEncrypt());
-}
+CryptFactory(ROT)
 
 bool ROTValidateFunction( std::string& extension )
 {
 	return true;
 }
 
-DecryptType* ROTDecryptFactory()
+// Bifid
+CryptFactory(Bifid)
+
+bool BifidValidateFunction( std::string& extension )
 {
-	return (DecryptType*)(new ROTDecrypt());
+	return true;
 }

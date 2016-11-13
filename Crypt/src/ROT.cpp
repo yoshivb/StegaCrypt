@@ -13,16 +13,7 @@ ROTEncrypt::~ROTEncrypt()
 
 uint ROTEncrypt::Initialize(string a_inputFilePath, string a_outputFilePath)
 {
-	FILE* inputFile = fopen(a_inputFilePath.c_str(), "rb");
-	outputFilePath = a_outputFilePath;
-
-	fseek(inputFile, 0, SEEK_END);
-	inputFileSize = ftell(inputFile);
-	rewind(inputFile);
-
-	fileBuffer = (uchar*)malloc(sizeof(uchar) * inputFileSize);
-	unsigned int result = fread(fileBuffer, 1, inputFileSize, inputFile);
-	fclose(inputFile);
+	__super::Initialize( a_inputFilePath, a_outputFilePath );
 
 	printf("ROT number:\n");
 	cin >> ROTNumber;

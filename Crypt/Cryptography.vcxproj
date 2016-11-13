@@ -165,11 +165,15 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Bifid.cpp" />
+    <ClCompile Include="src\Cipher.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\ROT.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="inc\AllTypes.h" />
+    <ClInclude Include="inc\Bifid.h" />
+    <ClInclude Include="inc\Cipher.h" />
     <ClInclude Include="inc\ROT.h" />
     <ClInclude Include="inc\Type.h" />
   </ItemGroup>

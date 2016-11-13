@@ -159,14 +159,16 @@ string GetExtension( string& filePath )
 	return string(filePath.begin() + index + 1, filePath.end());
 }
 
-#define EncryptMethodCount 1
+#define EncryptMethodCount 2
 EncryptFunctionsPair EncryptFunctions[EncryptMethodCount] {
-	EncryptFunctionsPair("ROT", &ROTEncryptFactory, &ROTValidateFunction)
+	EncryptFunctionsPair("ROT", &ROTEncryptFactory, &ROTValidateFunction),
+	EncryptFunctionsPair("Bifid", &BifidEncryptFactory, &BifidValidateFunction)
 };
 
-#define DecryptMethodCount 1
+#define DecryptMethodCount 2
 DecryptFunctionsPair DecryptFunctions[DecryptMethodCount]{
-	DecryptFunctionsPair("ROT", &ROTDecryptFactory, &ROTValidateFunction)
+	DecryptFunctionsPair("ROT", &ROTDecryptFactory, &ROTValidateFunction),
+	DecryptFunctionsPair("Bifid", &BifidDecryptFactory, &BifidValidateFunction)
 };
 
 void EncryptMode()
