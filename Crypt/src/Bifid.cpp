@@ -67,7 +67,6 @@ uint BifidEncrypt::Initialize(string a_inputFilePath, string a_outputFilePath)
 
 void BifidEncrypt::Encrypt()
 {
-	
 	uchar* buffer = (uchar*)malloc(sizeof(uchar) * inputFileSize);
 	string line;
 	uint j = 0;
@@ -76,7 +75,9 @@ void BifidEncrypt::Encrypt()
 		vector<Coords> coordList;
 		uint i;
 		Coords result;
-		for ( i = 0; i < line.size() - 1; i+=2 )
+		bool returnCarriage = (line[line.size() - 1] == '\r');
+		uint lineSize = ( returnCarriage ) ? line.size() - 1 : line.size();
+		for ( i = 0; i < lineSize - 1; i+=2 )
 		{
 			Coords firstCoords = polybiusSquare.find( line[i] )->second;
 			Coords secondCoords = polybiusSquare.find( line[i+1] )->second;
@@ -84,7 +85,7 @@ void BifidEncrypt::Encrypt()
 			result.x = secondCoords.y;
 			coordList.push_back( result );
 		}
-		if ( i == line.size() - 1 )
+		if ( i == lineSize - 1 )
 		{
 			Coords firstCoords = polybiusSquare.find( line[i] )->second;
 			Coords secondCoords = polybiusSquare.find( line[0] )->second;
@@ -95,8 +96,9 @@ void BifidEncrypt::Encrypt()
 		}
 		else
 			i = 0;
-		for ( ; i < line.size() - 1; i += 2 )
+		for ( ; i < lineSize - 1; i += 2 )
 		{
+			if ( line[i] == '\r' ) continue;
 			Coords firstCoords = polybiusSquare.find( line[i] )->second;
 			Coords secondCoords = polybiusSquare.find( line[i+1] )->second;
 			result.y = firstCoords.x;
@@ -112,7 +114,10 @@ void BifidEncrypt::Encrypt()
 			buffer[j] = findResult->first;
 		}
 		if ( j < inputFileSize )
+		{
+			if ( returnCarriage ) buffer[j++] = '\r';
 			buffer[j++] = '\n';
+		}
 		printf("\rProgress: %i%%", (int)(((float)j / (float)inputFileSize) * 100.0f));
 	}
 	printf("\rProgress: 100%%");
@@ -134,5 +139,48 @@ void BifidDecrypt::Initialize(std::string a_inputFilePath, std::string a_outputF
 
 void BifidDecrypt::Decrypt()
 {
-	encryption.Encrypt();
+	uchar* buffer = (uchar*)malloc(sizeof(uchar) * encryption.inputFileSize);
+	string line;
+	uint j = 0;
+	while (getline(encryption.inputFile, line))
+	{
+		vector<Coords> coordList;
+		vector<uchar> coords;
+		uint i;
+		Coords result;
+		bool returnCarriage = (line[line.size() - 1] == '\r');
+		uint lineSize = ( returnCarriage ) ? line.size() - 1 : line.size();
+		for ( i = 0; i < lineSize; i++ )
+		{
+			Coords curCoords = encryption.polybiusSquare.find( line[i] )->second;
+			coords.push_back( curCoords.y );
+			coords.push_back( curCoords.x );
+		}
+		for ( i = 0; i < lineSize; i++ )
+		{
+			result.y = coords[i];
+			result.x = coords[i+lineSize];
+			coordList.push_back( result );
+		}
+		for ( i = 0; i < coordList.size(); i++ )
+		{
+			auto findResult = find_if(begin(encryption.polybiusSquare), end(encryption.polybiusSquare), [&](const PolybiusSquarePair &pair)
+			{
+				return pair.second.x == coordList[i].x && pair.second.y == coordList[i].y;
+			});
+			buffer[j++] = findResult->first;
+		}
+		if ( j < encryption.inputFileSize )
+		{
+			if ( returnCarriage ) buffer[j++] = '\r';
+			buffer[j++] = '\n';
+		}
+		printf("\rProgress: %i%%", (int)(((float)j / (float)encryption.inputFileSize) * 100.0f));
+	}
+	printf("\rProgress: 100%%");
+	printf("\n");
+
+	FILE* outputFile = fopen(encryption.outputFilePath.c_str(), "wb");
+	fwrite(buffer, sizeof(uchar), encryption.inputFileSize, outputFile);
+	fclose(outputFile);
 }

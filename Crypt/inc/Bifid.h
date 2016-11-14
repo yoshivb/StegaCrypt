@@ -13,7 +13,8 @@ typedef map<uchar, Coords> PolybiusSquare;
 
 class BifidEncrypt: CipherEncrypt
 {
-private:
+	friend class BifidDecrypt;
+protected:
 	PolybiusSquare polybiusSquare;
 	std::ifstream inputFile;
 public:
