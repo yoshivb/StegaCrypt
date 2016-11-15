@@ -6,6 +6,7 @@
 #include <vector>
 using namespace std;
 
+// FreeImage functions.
 unsigned DLL_CALLCONV
 _ReadProc(void *buffer, unsigned size, unsigned count, fi_handle handle) {
 	return fread(buffer, size, count, (FILE *)handle);

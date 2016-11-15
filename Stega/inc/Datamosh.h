@@ -8,6 +8,7 @@ struct EditableChunk
 	uint length;
 };
 
+// Encrypt
 class DatamoshEncrypt : EncryptType
 {
 private:
@@ -20,10 +21,12 @@ public:
 	DatamoshEncrypt();
 	~DatamoshEncrypt();
 
+	// EncryptType interface
 	virtual uint Initialize(std::string a_inputFilePath, std::string a_outputFilePath);
 	virtual void Encrypt(FILE* a_encryptFile, uint a_fileSize);
 };
 
+// Decrypt
 class DatamoshDecrypt : DecryptType
 {
 private:
@@ -35,6 +38,7 @@ public:
 	DatamoshDecrypt();
 	~DatamoshDecrypt();
 
+	// DecryptType interface
 	virtual void Initialize(std::string inputFilePath, std::string a_outputFilePath);
 	virtual void Decrypt();
 };

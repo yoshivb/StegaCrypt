@@ -26,6 +26,7 @@ uint LSB_AudioEncrypt::Initialize(string a_inputFilePath, string a_outputFilePat
 	fclose(inputFile);
 
 	offset = 0;
+	// Find the beginning of the data.
 	for (uint i = 0; i < inputFileSize; i++)
 	{
 		if (fileBuffer[i] == 'd' && fileBuffer[i+1] == 'a' &&fileBuffer[i+2] == 't' &&fileBuffer[i+3] == 'a' )
@@ -88,6 +89,7 @@ void LSB_AudioDecrypt::Initialize(std::string a_inputFilePath, std::string a_out
 	fclose(inputFile);
 
 	offset = 0;
+	// Find the beginning of the data.
 	for (uint i = 0; i < inputFileSize; i++)
 	{
 		if (fileBuffer[i] == 'd' && fileBuffer[i + 1] == 'a' &&fileBuffer[i + 2] == 't' &&fileBuffer[i + 3] == 'a')

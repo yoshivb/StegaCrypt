@@ -96,6 +96,8 @@ void DatamoshEncrypt::Encrypt(FILE* a_encryptFile, uint a_fileSize)
 		startIndex = editableChunks[chunkIndex].beginIndex;
 	else if (modeIndex == 2)
 		startIndex = editableChunks[chunkIndex].beginIndex + (editableChunks[chunkIndex].length/2);
+
+	// Keep altering chunks and test if the file is still valid.
 	for (uint i = startIndex; i < inputFileSize && j < a_fileSize; i += interval)
 	{
 		if (fileBuffer[i] == buffer[j]) continue;
@@ -185,6 +187,8 @@ void DatamoshDecrypt::Decrypt()
 	unsigned int result = fread(origBuffer, 1, origFileSize, originalFileHandle);
 
 	vector<uchar> diffBytes;
+
+	// Find altered chunks.
 	for (uint i = 0; i < encryptedFileSize; i++)
 	{
 		if (origBuffer[i] != encryptedBytes[i])

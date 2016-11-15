@@ -46,7 +46,7 @@ void DCTEncrypt::EncryptDCTS(j_decompress_ptr a_srcinfo, j_compress_ptr a_dstinf
 				//...iterate over DCT coefficients
 				for (JDIMENSION i = 0; i < DCTSIZE2; i++)
 				{
-					//Manipulate your DCT coefficients here. For instance, the code here inverts the image.
+					//Altering the DCT coefficients.
 					short currentCoef = row_ptrs[compnum][0][blocknum][i];
 
 					if (l < a_fileSize && (currentCoef > 5 || currentCoef < -5) )
@@ -83,7 +83,7 @@ void DCTEncrypt::EncryptDCTS(j_decompress_ptr a_srcinfo, j_compress_ptr a_dstinf
 		//...iterate over rows
 		for (JDIMENSION rownum = 0; rownum < a_srcinfo->comp_info[compnum].height_in_blocks; rownum++)
 		{
-			//Copy the whole rows
+			// Copy the whole rows.
 			row_ptrs[compnum] = (a_dstinfo->mem->access_virt_barray)((j_common_ptr)a_dstinfo, src_coef_arrays[compnum], rownum, (JDIMENSION)1, TRUE);
 			memcpy(row_ptrs[compnum][0][0], coef_buffers[compnum][rownum][0], block_row_size);
 		}
@@ -101,21 +101,21 @@ uint DCTEncrypt::Initialize( string a_inputFilePath, string a_outputFilePath )
 	transformoption.trim = FALSE;
 	transformoption.force_grayscale = FALSE;
 
-	/* Initialize the JPEG decompression object with default error handling. */
+	// Initialize the JPEG decompression object with default error handling.
 	srcinfo.err = jpeg_std_error(&jsrcerr);
 	jpeg_create_decompress(&srcinfo);
 
-	/* Initialize the JPEG compression object with default error handling. */
+	// Initialize the JPEG compression object with default error handling.
 	dstinfo.err = jpeg_std_error(&jdsterr);
 	jpeg_create_compress(&dstinfo);
 
-	/* Specify data source for decompression */
+	// Specify data source for decompression.
 	jpeg_stdio_src(&srcinfo, inputFile);
 
-	/* Enable saving of extra markers that we want to copy */
+	// Enable saving of extra markers that we want to copy.
 	jcopy_markers_setup(&srcinfo, JCOPYOPT_ALL);
 
-	/* Read file header */
+	// Read file header.
 	(void)jpeg_read_header(&srcinfo, TRUE);
 
 	jtransform_request_workspace(&srcinfo, &transformoption);

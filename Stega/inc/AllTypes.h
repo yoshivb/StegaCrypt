@@ -5,10 +5,7 @@
 #include "LSB_Audio.h"
 
 // DCT
-EncryptType* DCTEncryptFactory()
-{
-	return (EncryptType*)(new DCTEncrypt());
-}
+CryptFactory(DCT)
 
 bool DCTValidateFunction( std::string& extension )
 {
@@ -19,16 +16,8 @@ bool DCTValidateFunction( std::string& extension )
 	return false;
 }
 
-DecryptType* DCTDecryptFactory()
-{
-	return (DecryptType*)(new DCTDecrypt());
-}
-
 // Datamosh
-EncryptType* DatamoshEncryptFactory()
-{
-	return (EncryptType*)(new DatamoshEncrypt());
-}
+CryptFactory(Datamosh)
 
 bool DatamoshValidateFunction(std::string& extension)
 {
@@ -39,16 +28,8 @@ bool DatamoshValidateFunction(std::string& extension)
 	return false;
 }
 
-DecryptType* DatamoshDecryptFactory()
-{
-	return (DecryptType*)(new DatamoshDecrypt());
-}
-
 // LSB Image
-EncryptType* LSB_ImageEncryptFactory()
-{
-	return (EncryptType*)(new LSB_ImageEncrypt());
-}
+CryptFactory(LSB_Image)
 
 bool LSB_ImageValidateFunction(std::string& extension)
 {
@@ -59,16 +40,8 @@ bool LSB_ImageValidateFunction(std::string& extension)
 	return false;
 }
 
-DecryptType* LSB_ImageDecryptFactory()
-{
-	return (DecryptType*)(new LSB_ImageDecrypt());
-}
-
 // LSB Audio
-EncryptType* LSB_AudioEncryptFactory()
-{
-	return (EncryptType*)(new LSB_AudioEncrypt());
-}
+CryptFactory(LSB_Audio)
 
 bool LSB_AudioValidateFunction(std::string& extension)
 {
@@ -77,9 +50,4 @@ bool LSB_AudioValidateFunction(std::string& extension)
 		return true;
 	}
 	return false;
-}
-
-DecryptType* LSB_AudioDecryptFactory()
-{
-	return (DecryptType*)(new LSB_AudioDecrypt());
 }

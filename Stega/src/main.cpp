@@ -12,6 +12,8 @@ struct EncryptFunctionsPair
 	string functionName;
 	EncryptType*( *function )();
 	bool(*validateFunction)(string&);
+
+	// Constructor
 	EncryptFunctionsPair( string a_functionName, EncryptType*( *a_function )(), bool(*a_validateFunction)(string&) )
 	{
 		functionName = a_functionName;
@@ -25,6 +27,8 @@ struct DecryptFunctionsPair
 	string functionName;
 	DecryptType*( *function )();
 	bool(*validateFunction)(string&);
+
+	// Constructor
 	DecryptFunctionsPair( string a_functionName, DecryptType*( *a_function )(), bool(*a_validateFunction)(string&) )
 	{
 		functionName = a_functionName;
@@ -175,6 +179,9 @@ DecryptFunctionsPair DecryptFunctions[DecryptMethodCount]{
 	DecryptFunctionsPair("DCT", &DCTDecryptFactory, &DCTValidateFunction)
 };
 
+/**
+* Main loop for an encryption method.
+*/
 void EncryptMode()
 {
 	string inputFilePath;
@@ -217,6 +224,9 @@ void EncryptMode()
 	encryptType->Encrypt(encryptFile, fileSize);
 }
 
+/**
+* Main loop for a decryption method.
+*/
 void DecryptMode()
 {
 	string inputFilePath;

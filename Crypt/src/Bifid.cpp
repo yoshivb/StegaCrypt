@@ -77,6 +77,8 @@ void BifidEncrypt::Encrypt()
 		Coords result;
 		bool returnCarriage = (line[line.size() - 1] == '\r');
 		uint lineSize = ( returnCarriage ) ? line.size() - 1 : line.size();
+
+		// Re-pair coords.
 		for ( i = 0; i < lineSize - 1; i+=2 )
 		{
 			Coords firstCoords = polybiusSquare.find( line[i] )->second;
@@ -98,13 +100,14 @@ void BifidEncrypt::Encrypt()
 			i = 0;
 		for ( ; i < lineSize - 1; i += 2 )
 		{
-			if ( line[i] == '\r' ) continue;
 			Coords firstCoords = polybiusSquare.find( line[i] )->second;
 			Coords secondCoords = polybiusSquare.find( line[i+1] )->second;
 			result.y = firstCoords.x;
 			result.x = secondCoords.x;
 			coordList.push_back( result );
 		}
+		
+		// Find letters to the new coords.
 		for ( uint k = 0; k < coordList.size(); k++, j++ )
 		{
 			auto findResult = find_if(begin(polybiusSquare), end(polybiusSquare), [&](const PolybiusSquarePair &pair)
@@ -150,18 +153,24 @@ void BifidDecrypt::Decrypt()
 		Coords result;
 		bool returnCarriage = (line[line.size() - 1] == '\r');
 		uint lineSize = ( returnCarriage ) ? line.size() - 1 : line.size();
+
+		// Get all numbers.
 		for ( i = 0; i < lineSize; i++ )
 		{
 			Coords curCoords = encryption.polybiusSquare.find( line[i] )->second;
 			coords.push_back( curCoords.y );
 			coords.push_back( curCoords.x );
 		}
+
+		// Re-pair coords.
 		for ( i = 0; i < lineSize; i++ )
 		{
 			result.y = coords[i];
 			result.x = coords[i+lineSize];
 			coordList.push_back( result );
 		}
+
+		// Find letters to the coords.
 		for ( i = 0; i < coordList.size(); i++ )
 		{
 			auto findResult = find_if(begin(encryption.polybiusSquare), end(encryption.polybiusSquare), [&](const PolybiusSquarePair &pair)
