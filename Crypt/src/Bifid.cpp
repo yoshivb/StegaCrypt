@@ -1,7 +1,6 @@
 #include "Bifid.h"
-#include <iostream>
-#include <sstream>
 #include <vector>
+#include <iostream>
 #include <algorithm>
 using namespace std;
 
@@ -14,33 +13,6 @@ BifidEncrypt::~BifidEncrypt()
 {
 }
 
-bool BifidEncrypt::ParseSquareFile( string& a_squareFilePath )
-{
-	std::ifstream squareFile(a_squareFilePath.c_str());
-
-	uint size = -1;
-	Coords coords;
-	coords.y = 0;
-
-	string line;
-	while (getline(squareFile, line))
-	{
-		std::istringstream iss(line);
-		
-		if ( size == -1 )
-			size = line.size();
-		else if ( line.size() != size )
-			return false;
-
-		for ( coords.x = 0; coords.x < line.size(); coords.x++ )
-			polybiusSquare.insert( PolybiusSquarePair( line[coords.x], coords) );
-
-		coords.y++;
-	}
-
-	return ( coords.y == size );
-}
-
 uint BifidEncrypt::Initialize(string a_inputFilePath, string a_outputFilePath)
 {
 	outputFilePath = a_outputFilePath;
@@ -48,7 +20,7 @@ uint BifidEncrypt::Initialize(string a_inputFilePath, string a_outputFilePath)
 
 	std::streampos fsize = inputFile.tellg();
 	inputFile.seekg( 0, std::ios::end );
-	inputFileSize = inputFile.tellg() - fsize;
+	inputFileSize = (uint)(inputFile.tellg() - fsize);
 	inputFile.seekg( 0, std::ios::beg );
 
 	string squareFilePath;
@@ -58,7 +30,7 @@ uint BifidEncrypt::Initialize(string a_inputFilePath, string a_outputFilePath)
 	{
 		printf( "Polybius Square file:\n" );
 		getline( cin, squareFilePath );
-		validFile = ParseSquareFile( squareFilePath );
+		validFile = (ParseSquareFile( squareFilePath, polybiusSquare ) != -1);
 		if( !validFile ) printf( "Invalid file!\n" );
 	}
 
@@ -110,10 +82,7 @@ void BifidEncrypt::Encrypt()
 		// Find letters to the new coords.
 		for ( uint k = 0; k < coordList.size(); k++, j++ )
 		{
-			auto findResult = find_if(begin(polybiusSquare), end(polybiusSquare), [&](const PolybiusSquarePair &pair)
-			{
-				return pair.second.x == coordList[k].x && pair.second.y == coordList[k].y;
-			});
+			PolybiusSquare::iterator findResult = FindByCoords( polybiusSquare, coordList[k] );
 			buffer[j] = findResult->first;
 		}
 		if ( j < inputFileSize )

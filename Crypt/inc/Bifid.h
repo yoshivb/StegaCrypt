@@ -1,15 +1,6 @@
 #pragma once
 #include "Cipher.h"
-#include <map>
-#include <fstream>
 using namespace std;
-
-struct Coords
-{
-	uchar x, y;
-};
-typedef pair<uchar, Coords> PolybiusSquarePair;
-typedef map<uchar, Coords> PolybiusSquare;
 
 // Encrypt
 class BifidEncrypt: CipherEncrypt
@@ -25,13 +16,6 @@ public:
 	// EncryptType interface
 	virtual uint Initialize(std::string a_inputFilePath, std::string a_outputFilePath);
 	virtual void Encrypt();
-
-	/**
-	* Parse a square file into polybiusSquare.
-	* @param string The file path.
-	* @return bool Whether the file was valid.
-	*/
-	bool ParseSquareFile( string& a_squareFilePath );
 };
 
 // Decrypt

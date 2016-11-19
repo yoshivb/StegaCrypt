@@ -7,36 +7,6 @@
 
 using namespace std;
 
-struct EncryptFunctionsPair
-{
-	string functionName;
-	EncryptType*( *function )();
-	bool(*validateFunction)(string&);
-
-	// Constructor
-	EncryptFunctionsPair( string a_functionName, EncryptType*( *a_function )(), bool(*a_validateFunction)(string&) )
-	{
-		functionName = a_functionName;
-		function = a_function;
-		validateFunction = a_validateFunction;
-	}
-};
-
-struct DecryptFunctionsPair
-{
-	string functionName;
-	DecryptType*( *function )();
-	bool(*validateFunction)(string&);
-
-	// Constructor
-	DecryptFunctionsPair( string a_functionName, DecryptType*( *a_function )(), bool(*a_validateFunction)(string&) )
-	{
-		functionName = a_functionName;
-		function = a_function;
-		validateFunction = a_validateFunction;
-	}
-};
-
 /**
 * Strips the quotes from the beginning and of a string.
 * @param string The original string.
@@ -162,18 +132,6 @@ string GetExtension( string& filePath )
 	if (index == string::npos) return string();
 	return string(filePath.begin() + index + 1, filePath.end());
 }
-
-#define EncryptMethodCount 2
-EncryptFunctionsPair EncryptFunctions[EncryptMethodCount] {
-	EncryptFunctionsPair("ROT", &ROTEncryptFactory, &ROTValidateFunction),
-	EncryptFunctionsPair("Bifid", &BifidEncryptFactory, &BifidValidateFunction)
-};
-
-#define DecryptMethodCount 2
-DecryptFunctionsPair DecryptFunctions[DecryptMethodCount]{
-	DecryptFunctionsPair("ROT", &ROTDecryptFactory, &ROTValidateFunction),
-	DecryptFunctionsPair("Bifid", &BifidDecryptFactory, &BifidValidateFunction)
-};
 
 /**
 * Main loop for an encryption method.

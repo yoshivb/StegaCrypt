@@ -167,13 +167,17 @@
   <ItemGroup>
     <ClCompile Include="src\Bifid.cpp" />
     <ClCompile Include="src\Cipher.cpp" />
+    <ClCompile Include="src\FourSquare.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\ROT.cpp" />
+    <ClCompile Include="src\Type.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="inc\AllTypes.h" />
     <ClInclude Include="inc\Bifid.h" />
     <ClInclude Include="inc\Cipher.h" />
+    <ClInclude Include="inc\Defines.h" />
+    <ClInclude Include="inc\FourSquare.h" />
     <ClInclude Include="inc\ROT.h" />
     <ClInclude Include="inc\Type.h" />
   </ItemGroup>
