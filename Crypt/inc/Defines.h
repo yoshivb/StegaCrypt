@@ -4,12 +4,12 @@
 #define CryptFactory(name)										\
 EncryptType* name##EncryptFactory()								\
 {																\
-	return (EncryptType*)(new  name##Encrypt());				\
+	return (EncryptType*)(new name##Encrypt());					\
 }																\
 																\
 DecryptType* name##DecryptFactory()								\
 {																\
-	return (DecryptType*)(new  name##Decrypt());				\
+	return (DecryptType*)(new name##Decrypt());					\
 }
 
 // Create an ValidateFunction with the name as prefix.
