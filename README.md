@@ -6,6 +6,7 @@ _The method implementations in this project are often unoptimized, this is a res
 ## Supported Cryptography methods
 * ROT Cipher
 * Bifid Cipher
+* Four Square Cipher
 
 ## Supported Steganography methods
 * LSB Audio
