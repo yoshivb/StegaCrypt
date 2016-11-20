@@ -34,5 +34,5 @@ bool name##ValidateFunction( std::string& extension )			\
 #define CryptValidate_3(name, ext1, ext2, ext3)					\
 bool name##ValidateFunction( std::string& extension )			\
 {																\
-	return (extension == #ext1 || extension == #ext2);			\
+	return (extension == #ext1 || extension == #ext2 || extension == #ext3);			\
 }
