@@ -25,13 +25,13 @@ bool name##ValidateFunction( std::string& extension )			\
 	return extension == #ext;									\
 }
 
-#define CryptValidate_2(name,ext1, ext2)						\
+#define CryptValidate_2(name, ext1, ext2)						\
 bool name##ValidateFunction( std::string& extension )			\
 {																\
 	return (extension == #ext1 || extension == #ext2);			\
 }
 
-#define CryptValidate_3(name,ext1, ext2, ext3)					\
+#define CryptValidate_3(name, ext1, ext2, ext3)					\
 bool name##ValidateFunction( std::string& extension )			\
 {																\
 	return (extension == #ext1 || extension == #ext2);			\
